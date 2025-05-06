@@ -34,9 +34,9 @@ Source: "win64\lib\libjacknet64.dll"; DestDir: "{app}"; Components: jackserver; 
 Source: "win64\lib\libjackserver64.dll"; DestDir: "{app}"; Components: jackserver; Flags: ignoreversion;
 ; drivers
 Source: "win64\lib\jack\*.dll"; DestDir: "{app}\jack"; Components: jackserver; Flags: ignoreversion;
-; jack client lib (NOTE goes into windir)
-Source: "win64\lib\libjack64.dll"; DestDir: "{win}"; Components: jackserver; Flags: ignoreversion;
-Source: "win64\lib32\libjack.dll"; DestDir: "{win}"; Components: jackserver; Flags: ignoreversion;
+; jack client lib (NOTE goes into windir) - not for no-admin install
+Source: "win64\lib\libjack64.dll"; DestDir: "{app}\windows"; Components: jackserver; Flags: ignoreversion;
+Source: "win64\lib32\libjack.dll"; DestDir: "{app}\windows"; Components: jackserver; Flags: ignoreversion;
 ; dev
 Source: "win64\include\jack\*.h"; DestDir: "{app}\include\jack"; Components: dev; Flags: ignoreversion;
 Source: "win64\lib\*.a"; DestDir: "{app}\lib"; Components: dev; Flags: ignoreversion;
@@ -48,10 +48,10 @@ Source: "win64\lib32\*.lib"; DestDir: "{app}\lib32"; Components: dev; Flags: ign
 Source: "win64\lib\jack\*.a"; DestDir: "{app}\lib\jack"; Components: dev; Flags: ignoreversion;
 
 [Registry]
-Root: HKLM; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "ServerExecutable"; ValueData: "{app}\jackd.exe"
-Root: HKLM; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
-Root: HKLM; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "Version"; ValueData: "{#VERSION}"
+Root: HKCU; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "ServerExecutable"; ValueData: "{app}\jackd.exe"
+Root: HKCU; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
+Root: HKCU; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "Version"; ValueData: "{#VERSION}"
 ; 32bit compat keys
-Root: HKLM; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "ServerExecutable"; ValueData: "{app}\jackd.exe"
-Root: HKLM; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
-Root: HKLM; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "Version"; ValueData: "{#VERSION}"
+Root: HKCU; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "ServerExecutable"; ValueData: "{app}\jackd.exe"
+Root: HKCU; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
+Root: HKCU; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "Version"; ValueData: "{#VERSION}"
