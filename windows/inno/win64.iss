@@ -9,12 +9,13 @@ AppSupportURL=https://github.com/jackaudio/jack2/issues/
 AppUpdatesURL=https://github.com/jackaudio/jack2-releases/releases/
 AppVersion={#VERSION}
 DefaultDirName={commonpf64}\JACK2
-DisableDirPage=yes
+DisableDirPage=no
 DisableWelcomePage=no
 LicenseFile=..\..\COPYING
 OutputBaseFilename=jack2-win64-{#VERSION}
 OutputDir=.
 UsePreviousAppDir=no
+PrivilegesRequired=lowest
 
 [Types]
 Name: "full"; Description: "Full installation (without JACK-Router)";
@@ -39,8 +40,8 @@ Source: "win64\lib\jack\*.dll"; DestDir: "{app}\jack"; Components: jackserver; F
 ; tools
 Source: "win64\bin\jack_*.exe"; DestDir: "{app}\tools"; Components: jackserver; Flags: ignoreversion;
 ; jack client lib (NOTE goes into windir)
-Source: "win64\lib\libjack64.dll"; DestDir: "{win}"; Components: jackserver; Flags: ignoreversion;
-Source: "win64\lib32\libjack.dll"; DestDir: "{win}"; Components: jackserver; Flags: ignoreversion;
+Source: "win64\lib\libjack64.dll"; DestDir: "{app}\Windows"; Components: jackserver; Flags: ignoreversion;
+Source: "win64\lib32\libjack.dll"; DestDir: "{app}\Windows"; Components: jackserver; Flags: ignoreversion;
 ; qjackctl
 Source: "win64\bin\qjackctl.exe"; DestDir: "{app}\qjackctl"; Components: qjackctl; Flags: ignoreversion;
 Source: "Qt5*.dll"; DestDir: "{app}\qjackctl"; Components: qjackctl; Flags: ignoreversion;
@@ -66,10 +67,10 @@ Source: "win64\jack-router\win64\JackRouter.ini"; DestDir: "{app}\jack-router\wi
 Name: "{commonprograms}\QjackCtl"; Filename: "{app}\qjackctl\qjackctl.exe"; IconFilename: "{app}\jack.ico"; WorkingDir: "{app}"; Comment: "Graphical Interface for JACK"; Components: qjackctl;
 
 [Registry]
-Root: HKLM; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "ServerExecutable"; ValueData: "{app}\jackd.exe"
-Root: HKLM; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
-Root: HKLM; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "Version"; ValueData: "{#VERSION}"
+Root: HKCU; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "ServerExecutable"; ValueData: "{app}\jackd.exe"
+Root: HKCU; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
+Root: HKCU; Subkey: "Software\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "Version"; ValueData: "{#VERSION}"
 ; 32bit compat keys
-Root: HKLM; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "ServerExecutable"; ValueData: "{app}\jackd.exe"
-Root: HKLM; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
-Root: HKLM; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "Version"; ValueData: "{#VERSION}"
+Root: HKCU; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "ServerExecutable"; ValueData: "{app}\jackd.exe"
+Root: HKCU; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
+Root: HKCU; Subkey: "Software\WOW6432Node\JACK"; Flags: deletevalue uninsdeletekeyifempty uninsdeletevalue; ValueType: string; ValueName: "Version"; ValueData: "{#VERSION}"
