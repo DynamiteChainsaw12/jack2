@@ -114,7 +114,7 @@ jobs:
         ln -sf $(pwd)/destdir windows/inno/${{ matrix.target }}
         pushd windows/inno
         echo "#define VERSION \"${{ github.event.pull_request.number || env.SHA8 }}\"" > version.iss
-        xvfb-run wine ${WINEPREFIX}/drive_c/InnoSeup/ISCC.exe ${{ matrix.target }}-mini.iss
+        xvfb-run wine ${WINEPREFIX}/drive_c/InnoSeup/ISCC.exe ${{ matrix.target }}.iss
         popd
     - uses: actions/upload-artifact@v4
       with:
