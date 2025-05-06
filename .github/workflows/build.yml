@@ -15,60 +15,10 @@ env:
   PAWPAW_SKIP_LV2: 1
 
 jobs:
-  macos:
-    strategy:
-      matrix:
-        target: [intel, universal]
-    runs-on: macos-12
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        submodules: recursive
-    - name: Set up cache
-      uses: actions/cache@v4
-      with:
-        path: |
-          ~/PawPawBuilds
-        key: macos-${{ matrix.target }}-v${{ env.CACHE_VERSION }}
-    - name: Set up dependencies
-      run: |
-        brew install cmake jq meson
-    - name: Bootstrap dependencies
-      shell: bash
-      run: |
-        if [ ! -d PawPaw ]; then
-          git clone https://github.com/DISTRHO/PawPaw.git
-          git -C PawPaw checkout ${PAWPAW_VERSION}
-        fi
-        ./PawPaw/.github/workflows/bootstrap-deps.sh macos-${{ matrix.target }}
-        ./PawPaw/bootstrap-jack2.sh macos-${{ matrix.target }}
-        ./PawPaw/.cleanup.sh macos-${{ matrix.target }}
-    - name: Build jack2
-      shell: bash
-      run: |
-        pushd PawPaw && source local.env macos-${{ matrix.target }} && popd
-        python ./waf configure --platform=darwin --prefix=/usr/local
-        python ./waf build -j $(sysctl -n hw.logicalcpu)
-        python ./waf install --destdir=$(pwd)/destdir
-    - name: Set sha8 (non-release)
-      if: startsWith(github.ref, 'refs/tags/') != true
-      run: echo "SHA8=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_ENV
-    - name: Set sha8 (release)
-      if: startsWith(github.ref, 'refs/tags/')
-      run: echo "SHA8=$(echo ${{ github.ref_name }})" >> $GITHUB_ENV
-    - name: Generate macOS package
-      shell: bash
-      run: |
-        ./macosx/generate-pkg.sh $(pwd)/destdir/usr/local ${{ github.event.pull_request.number || env.SHA8 }}
-    - uses: actions/upload-artifact@v4
-      with:
-        name: jack2-macOS-${{ matrix.target }}-${{ github.event.pull_request.number || env.SHA8 }}
-        path: macosx/jack2-osx-*.pkg
-
   windows:
     strategy:
       matrix:
-        target: [win32, win64]
+        target: [win64]
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v4
