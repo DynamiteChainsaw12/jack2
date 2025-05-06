@@ -15,6 +15,7 @@ LicenseFile=..\..\COPYING
 OutputBaseFilename=jack2-win64-{#VERSION}
 OutputDir=.
 UsePreviousAppDir=no
+PrivilegesRequired=lowest
 
 [Types]
 Name: "full"; Description: "Full installation";
